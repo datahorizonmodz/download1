@@ -226,6 +226,106 @@
       animation: fadeInUp 0.6s ease-out forwards;
     }
 
+    /* --- 6. POP-UP JOIN SALURAN (NEW FEATURE) --- */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85); /* Overlay Gelap */
+      backdrop-filter: blur(8px);
+      z-index: 10000; /* Paling atas */
+      display: none; /* Hidden by default (diatur JS) */
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Class aktif untuk memunculkan overlay */
+    .popup-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .popup-content {
+      background: #111827; /* Tetap Dark Theme */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      transform: scale(0.85) translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Animasi masuk konten */
+    .popup-overlay.active .popup-content {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Animasi keluar (Class closing ditambahkan oleh JS) */
+    .popup-overlay.closing {
+      opacity: 0;
+    }
+    .popup-overlay.closing .popup-content {
+      transform: scale(0.9) translateY(20px);
+    }
+
+    .popup-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .popup-text {
+      color: #f3f4f6;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 25px 0;
+      line-height: 1.5;
+    }
+
+    .popup-btn-join {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 16px;
+      background: #22c55e; /* Hijau WA */
+      color: #ffffff;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .popup-btn-join:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+      background: #16a34a;
+    }
+    
+    .popup-btn-join:active {
+      transform: scale(0.98);
+    }
+
     @media (max-width: 720px) {
       .versions { grid-template-columns: 1fr; }
       .downloads { grid-template-columns: 1fr; }
@@ -249,41 +349,37 @@
       }
     }
     /* Styling untuk daftar Info MOD yang mengikuti tema */
-.app-info {
-  text-align: left;
-  line-height: 1.6;
-  font-family: 'Quicksand', Arial, sans-serif; /* konsisten dengan situs */
-  color: var(--text-muted); /* otomatis mengikuti theme (dark/light) */
-  margin-top: 10px;
-}
+    .app-info {
+      text-align: left;
+      line-height: 1.6;
+      font-family: 'Quicksand', Arial, sans-serif; /* konsisten dengan situs */
+      color: var(--text-muted); /* otomatis mengikuti theme (dark/light) */
+      margin-top: 10px;
+    }
 
-/* styling list */
-.app-info-list {
-  padding-left: 20px;
-  margin: 0;
-  list-style-position: outside;
-}
+    /* styling list */
+    .app-info-list {
+      padding-left: 20px;
+      margin: 0;
+      list-style-position: outside;
+    }
 
-/* jarak antar item dan ukuran teks yang nyaman */
-.app-info-list li {
-  margin: 6px 0;
-  font-size: 14px; /* ubah kalau mau lebih kecil/besar */
-  color: var(--text-primary); /* main text color untuk tiap item (lebih kontras) */
-  opacity: 0.95; /* sedikit lembut */
-}
+    /* jarak antar item dan ukuran teks yang nyaman */
+    .app-info-list li {
+      margin: 6px 0;
+      font-size: 14px; /* ubah kalau mau lebih kecil/besar */
+      color: var(--text-primary); /* main text color untuk tiap item (lebih kontras) */
+      opacity: 0.95; /* sedikit lembut */
+    }
 
-/* jika mau item lebih muted (sesuai preferensi), gunakan ini sebagai alternatif:
-.app-info-list li { color: var(--text-muted); font-size:14px; }
-*/
-
-/* responsif: sedikit kecil di layar kecil */
-@media (max-width: 420px) {
-  .app-info-list li { font-size: 13px; }
-}
-.version h3 {
-  text-align: center;
-  margin: 1px 0 10px 0;   /* margin atas 6px, bawah 10px */
-}
+    /* responsif: sedikit kecil di layar kecil */
+    @media (max-width: 420px) {
+      .app-info-list li { font-size: 13px; }
+    }
+    .version h3 {
+      text-align: center;
+      margin: 1px 0 10px 0;   /* margin atas 6px, bawah 10px */
+    }
   </style>
   
   <script>
@@ -301,6 +397,16 @@
   <script type='text/javascript' src='//pl27971081.effectivegatecpm.com/75/4d/89/754d89bb0699b528a6f6b846376e68cb.js'></script>
 </head>
 <body class="">
+
+  <div id="channelPopup" class="popup-overlay">
+    <div class="popup-content">
+      <div class="popup-icon">📢</div>
+      <p class="popup-text">HARAP JOIN SALURAN TERLEBIH DAHULU AGAR UPDATE YANG MAKSIMAL</p>
+      <a href="https://whatsapp.com/channel/0029VaLWvFyKWEKjhLtp0H3j" target="_blank" class="popup-btn-join" id="joinBtn">
+        JOIN SALURAN
+      </a>
+    </div>
+  </div>
 
   <div class="container">
     <header class="animate-on-load" style="animation-delay: 0.1s;">
@@ -338,11 +444,11 @@
           <div class="downloads">
             <div class="download-btn" style="grid-column: span 2;">
               <h3>ORIGINAL APK</h3>
-              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/1thZZD7" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
+              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/Yb0K" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
             </div>
         <div class="download-btn" style="grid-column: span 2;">
               <h3>CLONE APK</h3>
-              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/1thZZD7" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
+              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/wy5f" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
             </div>
           </div>
         </div>
@@ -354,11 +460,11 @@
 </p>
           <div class="download-btn" style="grid-column: span 2;">
               <h3>ORIGINAL APK</h3>
-              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/1thZZD7" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
+              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/UHlRJ" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
           </div>
         <div class="download-btn" style="grid-column: span 2;">
               <h3>CLONE APK</h3>
-              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/1thZZD7" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
+              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/Xn1ONW" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
             </div>
           </div>
         </div>
@@ -461,6 +567,37 @@
     
     document.addEventListener('DOMContentLoaded', function() {
       
+      // --- LOGIKA POP-UP JOIN SALURAN (NEW) ---
+      const popup = document.getElementById('channelPopup');
+      const joinBtn = document.getElementById('joinBtn');
+      const hasJoined = localStorage.getItem('joinedChannel'); // Cek apakah sudah pernah join
+
+      // Jika belum pernah join (key 'joinedChannel' belum ada/true), tampilkan pop-up
+      if (!hasJoined) {
+        // Delay sedikit agar animasi load halaman jalan dulu
+        setTimeout(() => {
+          popup.classList.add('active');
+        }, 800);
+      }
+
+      // Event saat tombol diklik
+      if(joinBtn) {
+        joinBtn.addEventListener('click', function() {
+          // 1. Simpan status di localStorage agar pop-up tidak muncul lagi
+          localStorage.setItem('joinedChannel', 'true');
+          
+          // 2. Animasi keluar
+          popup.classList.add('closing');
+          
+          // 3. Hapus dari DOM/Hide setelah animasi selesai
+          setTimeout(() => {
+            popup.classList.remove('active');
+            popup.classList.remove('closing');
+            popup.style.display = 'none';
+          }, 400); // Sesuai durasi transisi CSS
+        });
+      }
+
       // --- 2. Logika Mode Gelap/Terang ---
       const themeToggle = document.getElementById('theme-toggle');
       
@@ -505,3 +642,4 @@
   </script>
 </body>
 </html>
+
