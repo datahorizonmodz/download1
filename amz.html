@@ -49,7 +49,6 @@
     }
     
     body {
-      /* TUGAS 2: Terapkan font Quicksand ke seluruh halaman */
       font-family: 'Quicksand', Arial, sans-serif;
       background: var(--bg);
       color: var(--text-primary);
@@ -82,7 +81,6 @@
     }
     
     .header-left { display: flex; align-items: center; gap: 16px; }
-    /* Poin 1: Ganti Logo DZ menjadi WINK */
     .logo { width: 64px; height: 64px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; font-size: 24px; }
     h1 { margin: 0; font-size: 20px; }
     h1 a { color: inherit; text-decoration: none; }
@@ -127,16 +125,15 @@
     small { color: var(--text-muted); transition: color 0.3s ease; }
     footer { margin-top: 20px; color: var(--text-muted); font-size: 13px; transition: color 0.3s ease; }
     
-    /* 1. Gaya untuk link tutorial di footer (menggantikan .btn-mini) */
     footer a {
-      color: var(--warning); /* Warna agar menonjol, konsisten dengan .notice */
-      text-decoration: none; /* Hilangkan garis bawah default */
+      color: var(--warning); 
+      text-decoration: none; 
     }
     footer a:hover {
-      text-decoration: underline; /* Tampilkan garis bawah saat di-hover */
+      text-decoration: underline; 
     }
 
-    /* --- 2. Switch Mode Gelap/Terang --- */
+    /* --- Switch Mode Gelap/Terang --- */
     .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider {
@@ -146,7 +143,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #3e4c5b; /* Latar slider saat mode gelap */
+      background-color: #3e4c5b; 
       transition: .4s;
       border-radius: 28px;
     }
@@ -165,7 +162,7 @@
     input:checked + .slider { background-color: var(--accent); }
     input:checked + .slider:before { transform: translateX(22px); }
 
-    /* --- 3. Tombol Mengambang (FAB) --- */
+    /* --- Tombol Mengambang (FAB) --- */
     .fab {
       position: fixed;
       bottom: 20px;
@@ -189,13 +186,13 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
     }
 
-    /* --- 4. Notifikasi Promo --- */
+    /* --- Notifikasi Promo --- */
     .promo-notification {
       position: fixed;
-      bottom: 30px; /* Sejajar dengan FAB */
-      right: 86px; /* 56px (FAB) + 20px (margin) + 10px (jarak) */
+      bottom: 30px; 
+      right: 86px; 
       background-color: var(--warning);
-      color: #1a1a1a; /* Teks gelap agar terbaca */
+      color: #1a1a1a; 
       padding: 8px 12px;
       border-radius: 8px;
       font-size: 14px;
@@ -203,54 +200,52 @@
       box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
       z-index: 999;
       opacity: 0;
-      transform: translateX(-30px); /* Mulai dari kiri */
+      transform: translateX(-30px); 
       transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     }
     .promo-notification.show {
       opacity: 1;
-      transform: translateX(0); /* Slide ke posisi normal */
+      transform: translateX(0); 
     }
     .promo-notification.hide {
       opacity: 0;
-      transform: translateX(30px); /* Hilang ke kanan */
+      transform: translateX(30px); 
     }
     
-    /* --- 5. Animasi Load Halaman --- */
+    /* --- Animasi Load Halaman --- */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
     .animate-on-load {
-      /* Sembunyikan elemen sebelum animasi */
       opacity: 0;
       animation: fadeInUp 0.6s ease-out forwards;
     }
 
-    /* --- 6. POP-UP JOIN SALURAN (NEW FEATURE) --- */
+    /* --- POP-UP JOIN SALURAN (UPDATED) --- */
     .popup-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.85); /* Overlay Gelap */
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(8px);
-      z-index: 10000; /* Paling atas */
-      display: none; /* Hidden by default (diatur JS) */
+      z-index: 10000;
+      display: none; 
       align-items: center;
       justify-content: center;
       opacity: 0;
       transition: opacity 0.4s ease;
     }
 
-    /* Class aktif untuk memunculkan overlay */
     .popup-overlay.active {
       display: flex;
       opacity: 1;
     }
 
     .popup-content {
-      background: #111827; /* Tetap Dark Theme */
+      background: #111827; /* Dark Theme Only for Popup */
       border: 1px solid rgba(255, 255, 255, 0.1);
       padding: 30px;
       border-radius: 20px;
@@ -260,14 +255,13 @@
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
       transform: scale(0.85) translateY(30px);
       transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative; /* Untuk posisi tombol close */
     }
 
-    /* Animasi masuk konten */
     .popup-overlay.active .popup-content {
       transform: scale(1) translateY(0);
     }
 
-    /* Animasi keluar (Class closing ditambahkan oleh JS) */
     .popup-overlay.closing {
       opacity: 0;
     }
@@ -275,9 +269,25 @@
       transform: scale(0.9) translateY(20px);
     }
 
+    /* Tombol Close (X) */
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 28px;
+        color: #9aa4b2;
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.3s;
+        z-index: 10;
+    }
+    .close-btn:hover {
+        color: #ffffff;
+    }
+
     .popup-icon {
       font-size: 48px;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       display: inline-block;
       animation: float 3s ease-in-out infinite;
     }
@@ -289,20 +299,34 @@
 
     .popup-text {
       color: #f3f4f6;
-      font-family: 'Quicksand', sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
-      margin: 0 0 25px 0;
+      margin: 0 0 15px 0;
       line-height: 1.5;
     }
 
-    .popup-btn-join {
+    .popup-text-small {
+      color: #e5e7eb;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 15px 0;
+      line-height: 1.6;
+    }
+
+    /* Garis Pembatas */
+    .popup-divider {
+        height: 1px;
+        background: rgba(255,255,255,0.15);
+        margin: 20px 0;
+        width: 100%;
+    }
+
+    /* Tombol Umum Pop-up */
+    .popup-btn-base {
       display: block;
       width: 100%;
       box-sizing: border-box;
-      padding: 16px;
-      background: #22c55e; /* Hijau WA */
-      color: #ffffff;
+      padding: 14px;
       font-family: 'Quicksand', sans-serif;
       font-weight: 700;
       font-size: 16px;
@@ -310,34 +334,48 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
-      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-    }
-
-    .popup-btn-join:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
-      background: #16a34a;
+      transition: all 0.3s ease;
     }
     
-    .popup-btn-join:active {
-      transform: scale(0.98);
+    .popup-btn-base:hover { transform: scale(1.02); }
+    .popup-btn-base:active { transform: scale(0.98); }
+
+    /* Tombol Join (Hijau) */
+    .popup-btn-join {
+      background: #22c55e;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+    }
+    .popup-btn-join:hover {
+      background: #16a34a;
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+    }
+
+    /* Tombol Beli (Biru) */
+    .popup-btn-buy {
+      background: #0b84ff;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(11, 132, 255, 0.3);
+      margin-top: 10px;
+    }
+    .popup-btn-buy:hover {
+      background: #0070e0;
+      box-shadow: 0 0 25px rgba(11, 132, 255, 0.5);
     }
 
     @media (max-width: 720px) {
       .versions { grid-template-columns: 1fr; }
       .downloads { grid-template-columns: 1fr; }
       .promo-notification {
-        /* Pindahkan notif ke atas FAB di mobile */
         width: calc(100% - 90px);
         text-align: center;
-        bottom: 86px; /* Di atas FAB */
+        bottom: 86px; 
         right: 20px;
         left: 20px;
         margin: 0 auto;
-        transform: translateY(20px); /* Mulai dari bawah */
+        transform: translateY(20px); 
       }
       .promo-notification.show {
         opacity: 1;
@@ -345,40 +383,37 @@
       }
       .promo-notification.hide {
         opacity: 0;
-        transform: translateY(20px); /* Hilang ke bawah */
+        transform: translateY(20px); 
       }
     }
-    /* Styling untuk daftar Info MOD yang mengikuti tema */
+    
     .app-info {
       text-align: left;
       line-height: 1.6;
-      font-family: 'Quicksand', Arial, sans-serif; /* konsisten dengan situs */
-      color: var(--text-muted); /* otomatis mengikuti theme (dark/light) */
+      font-family: 'Quicksand', Arial, sans-serif; 
+      color: var(--text-muted); 
       margin-top: 10px;
     }
 
-    /* styling list */
     .app-info-list {
       padding-left: 20px;
       margin: 0;
       list-style-position: outside;
     }
 
-    /* jarak antar item dan ukuran teks yang nyaman */
     .app-info-list li {
       margin: 6px 0;
-      font-size: 14px; /* ubah kalau mau lebih kecil/besar */
-      color: var(--text-primary); /* main text color untuk tiap item (lebih kontras) */
-      opacity: 0.95; /* sedikit lembut */
+      font-size: 14px; 
+      color: var(--text-primary); 
+      opacity: 0.95; 
     }
 
-    /* responsif: sedikit kecil di layar kecil */
     @media (max-width: 420px) {
       .app-info-list li { font-size: 13px; }
     }
     .version h3 {
       text-align: center;
-      margin: 1px 0 10px 0;   /* margin atas 6px, bawah 10px */
+      margin: 1px 0 10px 0;   
     }
   </style>
   
@@ -400,14 +435,36 @@
 
   <div id="channelPopup" class="popup-overlay">
     <div class="popup-content">
+      <span id="closePopupBtn" class="close-btn">&times;</span>
+
       <div class="popup-icon">📢</div>
       <p class="popup-text">HARAP JOIN SALURAN TERLEBIH DAHULU AGAR UPDATE YANG MAKSIMAL</p>
-      <a href="https://whatsapp.com/channel/0029VaLWvFyKWEKjhLtp0H3j" target="_blank" class="popup-btn-join" id="joinBtn">
+      <a href="https://whatsapp.com/channel/0029VaLWvFyKWEKjhLtp0H3j" target="_blank" class="popup-btn-base popup-btn-join">
         JOIN SALURAN
       </a>
+
+      <div class="popup-divider"></div>
+
+      <p class="popup-text-small">
+        AFTER MOTION TIDAK SUPPORT UNTUK LINK 5MB+ YA,<br>
+        KALAU MAU BELI PREMIUM NYA HANYA RP. 2.000 SAJA,<br>
+        KLIK TOMBOL BELI YA
+      </p>
+
+      <p class="popup-text-small" style="font-size: 13px; font-weight: 400; font-style: italic; color: #cbd5e1; margin-top: 5px; margin-bottom: 15px;">
+        AFTER MOTION DOES NOT SUPPORT LINKS OVER 5MB.<br>
+        IF YOU WANT TO BUY THE PREMIUM VERSION, IT ONLY COSTS IDR 2,000.<br>
+        CLICK THE BUY BUTTON BELOW.
+      </p>
+
+      <a href="https://wa.link/h05sn0" target="_blank" class="popup-btn-base popup-btn-buy">
+        BELI / BUY
+      </a>
+
+      <div class="popup-divider"></div>
+
     </div>
   </div>
-
   <div class="container">
     <header class="animate-on-load" style="animation-delay: 0.1s;">
       <div class="header-left">
@@ -439,14 +496,14 @@
         <div class="version">
           <h3>AMZ ORI THEME</h3>
           <p style="margin:8px 0; color:var(--text-muted); font-size:12px;">
-  Note Update : Hanya Support untuk di bawah 5MB dan XML, New Efek yang melimpah dan pastinya Support 4K 60FPS (Tergantung Device) No Watermark dan No Password, Support All Device
-</p>
+            Note Update : Hanya Support untuk di bawah 5MB dan XML, New Efek yang melimpah dan pastinya Support 4K 60FPS (Tergantung Device) No Watermark dan No Password, Support All Device
+          </p>
           <div class="downloads">
             <div class="download-btn" style="grid-column: span 2;">
               <h3>ORIGINAL APK</h3>
               <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/Yb0K" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
             </div>
-        <div class="download-btn" style="grid-column: span 2;">
+            <div class="download-btn" style="grid-column: span 2;">
               <h3>CLONE APK</h3>
               <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/wy5f" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
             </div>
@@ -456,47 +513,45 @@
         <div class="version">
           <h3>AMZ DARK THEME</h3>
           <p style="margin:8px 0; color:var(--text-muted); font-size:12px;">
-  Note Update : Hanya Support untuk di bawah 5MB dan XML, New Efek yang melimpah dan pastinya Support 4K 60FPS (Tergantung Device) No Watermark dan No Password, Support All Device
-</p>
-          <div class="download-btn" style="grid-column: span 2;">
-              <h3>ORIGINAL APK</h3>
-              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/UHlRJ" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
-          </div>
-        <div class="download-btn" style="grid-column: span 2;">
-              <h3>CLONE APK</h3>
-              <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/Xn1ONW" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
+            Note Update : Hanya Support untuk di bawah 5MB dan XML, New Efek yang melimpah dan pastinya Support 4K 60FPS (Tergantung Device) No Watermark dan No Password, Support All Device
+          </p>
+          <div class="downloads">
+            <div class="download-btn" style="grid-column: span 2;">
+                <h3>ORIGINAL APK</h3>
+                <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/UHlRJ" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
+            </div>
+            <div class="download-btn" style="grid-column: span 2;">
+                <h3>CLONE APK</h3>
+                <button class="btn" data-ad="https://www.effectivegatecpm.com/z55w4h3qx2?key=b3e81a33d4a9ac5be6d499f5f1bd6274" data-dl="https://sfl.gl/Xn1ONW" onclick="handleDownload(this)" style="margin-top: 8px;">Download</button>
             </div>
           </div>
         </div>
 
-        
-          
-          <div class="version">
+        <div class="version">
           <h3>INFO MOD APK</h3>
           <div class="app-info">
-  <ul class="app-info-list">
-    <li>Menonaktifkan Kode Error</li>
-    <li>Tanpa Iklan & Watermark</li>
-    <li>Tema Original & Mode Gelap</li>
-    <li>Layar Paywall Dihapus</li>
-    <li>Mendukung Resolusi Hingga 4K</li>
-    <li>Support 999 Layer</li>
-    <li>Ekspor Paket Proyek Berfungsi</li>
-    <li>Semua Resolusi Premium</li>
-    <li>Opsi Ekspor Terbuka</li>
-    <li>Perbaikan Impor File XML (Harus Online)</li>
-    <li>Login Anonim Tersedia</li>
-    <li>Menu Rahasia Diaktifkan</li>
-    <li>(Tekan 3 jari secara bersamaan)</li>
-    <li>Optimasi Sumber Daya</li>
-  </ul>
-</div>
-          
-            </div>
+            <ul class="app-info-list">
+              <li>Menonaktifkan Kode Error</li>
+              <li>Tanpa Iklan & Watermark</li>
+              <li>Tema Original & Mode Gelap</li>
+              <li>Layar Paywall Dihapus</li>
+              <li>Mendukung Resolusi Hingga 4K</li>
+              <li>Support 999 Layer</li>
+              <li>Ekspor Paket Proyek Berfungsi</li>
+              <li>Semua Resolusi Premium</li>
+              <li>Opsi Ekspor Terbuka</li>
+              <li>Perbaikan Impor File XML (Harus Online)</li>
+              <li>Login Anonim Tersedia</li>
+              <li>Menu Rahasia Diaktifkan</li>
+              <li>(Tekan 3 jari secara bersamaan)</li>
+              <li>Optimasi Sumber Daya</li>
+            </ul>
           </div>
         </div>
         
-      </div> <footer class="animate-on-load" style="animation-delay: 0.3s;">
+      </div> 
+
+      <footer class="animate-on-load" style="animation-delay: 0.3s;">
         <p>Catatan: Semua link menggunakan <i>SafeLinku</i> dan <i>SafeFileku</i>, jadi jika tidak punya skil untuk melewati link tersebut tonton
           <a href="https://youtu.be/gTUJfiU3pb0?si=Kp79XF6D36Yy06xV" target="_blank" rel="noopener noreferrer">
             <i>Tutorial Youtube ya</i>
@@ -516,12 +571,6 @@
   </div>
 
   <script>
-    // Poin 3: Konfirmasi Alur Download
-    // Fungsi handleDownload dan startCountdownOnButton SUDAH menjalankan alur yang diminta:
-    // 1. handleDownload -> window.open(adLink, '_blank') (Buka Iklan)
-    // 2. handleDownload -> startCountdownOnButton(btn, dlLink, 10) (Mulai Hitungan Mundur 10 detik)
-    // 3. startCountdownOnButton -> Setelah 10 detik, tombol diganti dengan link Unduh Sekarang (a.href = downloadUrl)
-    
     function isBusy(btn) { return btn.getAttribute('data-busy') === '1'; }
     function setBusy(btn, val) { btn.setAttribute('data-busy', val ? '1' : '0'); }
 
@@ -530,10 +579,8 @@
       const adLink = btn.getAttribute('data-ad') || 'https://example.com/ad';
       const dlLink = btn.getAttribute('data-dl') || 'https://example.com/download.apk';
 
-      // Poin 3: Buka link iklan di tab baru
       try { window.open(adLink, '_blank'); } catch (e) { console.log('Gagal membuka tab iklan', e); }
 
-      // Poin 3: Segera mulai hitungan mundur
       startCountdownOnButton(btn, dlLink, 10);
     }
 
@@ -550,7 +597,6 @@
           btn.textContent = `Menyiapkan... (${s}s)`;
         } else {
           clearInterval(id);
-          // Poin 3: Setelah hitungan mundur selesai, tombol berubah menjadi "Unduh Sekarang" dan mengarah ke link di atribut data-dl
           const a = document.createElement('a');
           a.className = 'btn complete';
           a.href = downloadUrl;
@@ -558,59 +604,43 @@
           a.rel = 'noopener noreferrer';
           a.textContent = 'Unduh Sekarang';
           btn.parentNode.replaceChild(a, btn);
-          // Note: setBusy(btn, false) tidak lagi relevan karena btn sudah diganti
         }
       }, 1000);
     }
     
-    // --- PENAMBAHAN FUNGSI BARU (Tidak Diubah) ---
-    
     document.addEventListener('DOMContentLoaded', function() {
       
-      // --- LOGIKA POP-UP JOIN SALURAN (NEW) ---
+      // --- LOGIKA POP-UP BARU ---
       const popup = document.getElementById('channelPopup');
-      const joinBtn = document.getElementById('joinBtn');
-      const hasJoined = localStorage.getItem('joinedChannel'); // Cek apakah sudah pernah join
+      const closeBtn = document.getElementById('closePopupBtn');
+      
+      // 1. Tampilkan Pop-up Setiap Kali Halaman Dimuat (dengan delay sedikit utk animasi)
+      setTimeout(() => {
+        popup.classList.add('active');
+      }, 500);
 
-      // Jika belum pernah join (key 'joinedChannel' belum ada/true), tampilkan pop-up
-      if (!hasJoined) {
-        // Delay sedikit agar animasi load halaman jalan dulu
-        setTimeout(() => {
-          popup.classList.add('active');
-        }, 800);
-      }
-
-      // Event saat tombol diklik
-      if(joinBtn) {
-        joinBtn.addEventListener('click', function() {
-          // 1. Simpan status di localStorage agar pop-up tidak muncul lagi
-          localStorage.setItem('joinedChannel', 'true');
-          
-          // 2. Animasi keluar
-          popup.classList.add('closing');
-          
-          // 3. Hapus dari DOM/Hide setelah animasi selesai
-          setTimeout(() => {
-            popup.classList.remove('active');
-            popup.classList.remove('closing');
-            popup.style.display = 'none';
-          }, 400); // Sesuai durasi transisi CSS
+      // 2. Fungsi Tutup Pop-up (tanpa reload)
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            // Tambah class closing untuk animasi keluar
+            popup.classList.add('closing');
+            
+            // Tunggu animasi CSS selesai baru hide elemen
+            setTimeout(() => {
+                popup.classList.remove('active', 'closing');
+                popup.style.display = 'none';
+            }, 400); // 400ms sesuai durasi transisi css
         });
       }
 
-      // --- 2. Logika Mode Gelap/Terang ---
+      // --- SCRIPT LAIN (Theme, Promo) ---
       const themeToggle = document.getElementById('theme-toggle');
-      
-      if (localStorage.getItem('theme') === 'light') {
-        document.body.classList.add('light-mode');
-        if(themeToggle) themeToggle.checked = true;
-      } else {
-        document.body.classList.remove('light-mode');
-      }
-
       if (themeToggle) {
+        const isLight = document.body.classList.contains('light-mode') || document.documentElement.classList.contains('light-mode');
+        themeToggle.checked = !isLight; 
+        
         themeToggle.addEventListener('change', function() {
-          if (this.checked) {
+          if (!this.checked) {
             document.body.classList.add('light-mode');
             localStorage.setItem('theme', 'light');
           } else {
@@ -620,24 +650,14 @@
         });
       }
       
-      // --- 4. Logika Notifikasi Promo ---
       const promoNotif = document.getElementById('promo-notif');
       if (promoNotif) {
-        function cyclePromo() {
-          promoNotif.classList.remove('hide');
-          promoNotif.classList.add('show');
-          
-          setTimeout(() => {
-            promoNotif.classList.remove('show');
-            promoNotif.classList.add('hide');
-          }, 5000);
-        }
-        
-        setTimeout(cyclePromo, 2000);
-        
-        setInterval(cyclePromo, 20000); 
+        setTimeout(() => { promoNotif.classList.add('show'); }, 3000);
+        setTimeout(() => { 
+          promoNotif.classList.remove('show');
+          promoNotif.classList.add('hide');
+        }, 12000);
       }
-      
     });
   </script>
 </body>
