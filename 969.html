@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <title>DATZON GIVEAWAY - 969 Followers Special</title>
+    <!-- Font Import -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Theme Colors - Dark Mode Default */
+            --bg-color: #0a0a0c;
+            --card-bg: #16161e;
+            --text-main: #ffffff;
+            --text-dim: #a1a1aa;
+            --accent: #a855f7;
+            --accent-glow: rgba(168, 85, 247, 0.4);
+            --border: rgba(255, 255, 255, 0.1);
+            --error: #ef4444;
+            --success: #22c55e;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f4f4f5;
+            --card-bg: #ffffff;
+            --text-main: #18181b;
+            --text-dim: #71717a;
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.2);
+            --border: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease;
+        }
+
+        /* --- SECURITY BLUR SYSTEM --- */
+        #main-wrapper {
+            filter: blur(30px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        body.unlocked #main-wrapper {
+            filter: blur(0);
+            pointer-events: auto;
+            user-select: auto;
+            transition: filter 0.6s ease;
+        }
+
+        /* --- AUTH POPUP (FIXED POSITIONING) --- */
+        #auth-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center; /* Centered Vertically */
+            justify-content: center; /* Centered Horizontally */
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        body.unlocked #auth-overlay {
+            display: none;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 28px; /* Centered card has all corners rounded */
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            position: relative;
+            transform: translateY(0);
+        }
+
+        .lock-icon-container {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .lock-icon {
+            width: 32px;
+            height: 32px;
+            fill: var(--accent);
+            transition: var(--transition);
+        }
+
+        .shaking {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            50% { transform: translateX(8px); }
+            75% { transform: translateX(-4px); }
+        }
+
+        .auth-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .auth-card p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(128, 128, 128, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .auth-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
+        .verify-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px var(--accent-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            background: rgba(10, 10, 12, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            color: var(--accent);
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid var(--accent);
+            padding: 4px;
+            margin-bottom: 24px;
+            object-fit: cover;
+            box-shadow: 0 0 30px var(--accent-glow);
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .main-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, var(--text-main), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .description {
+            color: var(--text-dim);
+            line-height: 1.6;
+            font-size: 1rem;
+            margin-bottom: 40px;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 40px 0;
+        }
+
+        /* --- GIVEAWAY CARDS --- */
+        .section-label {
+            text-align: left;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .giveaway-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .claim-card {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+            animation: slideUp 0.6s ease backwards;
+        }
+
+        .claim-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.15);
+        }
+
+        .card-logo-container {
+            width: 54px;
+            height: 54px;
+            min-width: 54px;
+            border-radius: 50%; /* Forced Circular Container */
+            background: #fff;
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            overflow: hidden;
+        }
+
+        .am-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Fixed Logo Stretching */
+            border-radius: 50%;
+        }
+
+        .card-info {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .card-info h3 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+        }
+
+        .card-info span {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .claim-btn {
+            background: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        /* --- SOCIAL CARDS (FORCED CIRCLE ICONS) --- */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 60px;
+        }
+
+        .social-card {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 14px;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        .social-card:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%; /* Forced Perfect Circle */
+            margin-right: 14px;
+            object-fit: cover; /* Prevents rectangular distortion */
+        }
+
+        .social-emoji-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            background: var(--accent);
+            border-radius: 50%; /* Forced Perfect Circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            margin-right: 14px;
+        }
+
+        .social-card span {
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        footer {
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .social-grid { grid-template-columns: 1fr; }
+            .main-title { font-size: 1.8rem; }
+            .auth-card { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Security Overlay -->
+    <div id="auth-overlay">
+        <div class="auth-card" id="auth-card">
+            <div class="lock-icon-container" id="lock-container">
+                <svg id="lock-svg" class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+            </div>
+            <h2>Security Verification</h2>
+            <p>Please enter the access code to view the rewards.</p>
+            <input type="text" id="pass-input" class="auth-input" placeholder="ACCESS CODE" autocomplete="off" novalidate>
+            <button class="verify-btn" onclick="checkPassword()">Verify Access</button>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div id="main-wrapper">
+        <header>
+            <div class="logo">DATZON CHANNEL</div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span id="theme-icon">🌙</span>
+                <span id="theme-text">Dark Mode</span>
+            </button>
+        </header>
+
+        <main class="container">
+            <section class="profile-section">
+                <img src="https://i.ibb.co.com/Y7DScK4D/quality-restoration-20251018223600821-1.png" alt="Profile" class="profile-img">
+                <h1 class="main-title">DATZON GIVEAWAY</h1>
+                <p class="description">
+                    Terima kasih untuk para followers tercinta yang selalu mendukung gua. Sebagai bentuk terimakasih, gua mau bagi bagi akun Alight Motion Premium untuk kalian <b>(FREE)</b> bagi yang mau aja hehe. Kuota terbatas — siapa cepat dia dapat!
+                </p>
+            </section>
+
+            <div class="divider"></div>
+
+            <div class="section-label">Giveaway List</div>
+            <div class="giveaway-list">
+                <!-- Card 1 -->
+                <div class="claim-card" style="animation-delay: 0.1s;">
+                    <div class="card-logo-container">
+                        <img src="https://i.ibb.co.com/d0mBdGxc/quality-restoration-20260203052031688.png" alt="AM" class="am-logo">
+                    </div>
+                    <div class="card-info">
+                        <h3>ALIGHT MOTION PRIVATE</h3>
+                        <span>10 ACC • Available</span>
+                    </div>
+                    <a href="https://wa.link/mdm4s2" target="_blank" class="claim-btn">KLAIM</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="claim-card" style="animation-delay: 0.2s;">
+                    <div class="card-logo-container">
+                        <img src="https://i.ibb.co.com/d0mBdGxc/quality-restoration-20260203052031688.png" alt="AM" class="am-logo">
+                    </div>
+                    <div class="card-info">
+                        <h3>ALIGHT MOTION SHARING1</h3>
+                        <span>10 ACC • Available</span>
+                    </div>
+                    <a href="https://wa.link/woug9u" target="_blank" class="claim-btn">KLAIM</a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="claim-card" style="animation-delay: 0.3s;">
+                    <div class="card-logo-container">
+                        <img src="https://i.ibb.co.com/d0mBdGxc/quality-restoration-20260203052031688.png" alt="AM" class="am-logo">
+                    </div>
+                    <div class="card-info">
+                        <h3>ALIGHT MOTION SHARING2</h3>
+                        <span>10 ACC • Available</span>
+                    </div>
+                    <a href="https://wa.link/2sw8hy" target="_blank" class="claim-btn">KLAIM</a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="claim-card" style="animation-delay: 0.4s;">
+                    <div class="card-logo-container">
+                        <img src="https://i.ibb.co.com/d0mBdGxc/quality-restoration-20260203052031688.png" alt="AM" class="am-logo">
+                    </div>
+                    <div class="card-info">
+                        <h3>ALIGHT MOTION SHARING3</h3>
+                        <span>10 ACC • Available</span>
+                    </div>
+                    <a href="https://wa.link/3v41d4" target="_blank" class="claim-btn">KLAIM</a>
+                </div>
+            </div>
+
+            <div class="section-label">Connect With Me</div>
+            <div class="social-grid">
+                <a href="https://youtube.com/@dtzns?si=Kk4EEHHdNYV4r6sf" class="social-card" target="_blank">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaYgczYNBtNXEixUwTcAUDLu3zg2HCZC6CV1JiYd0ZlzHkHh3_Yd8dXng&s" alt="YouTube" class="social-icon">
+                    <span>YouTube</span>
+                </a>
+                <a href="https://www.tiktok.com/@datzonn?_r=1&_t=ZS-93avf7Kjp2L" class="social-card" target="_blank">
+                    <img src="https://i.ibb.co.com/QFbF6XC5/quality-restoration-20260203044155769.png" alt="TikTok" class="social-icon">
+                    <span>TikTok</span>
+                </a>
+                <a href="https://whatsapp.com/channel/0029VaLWvFyKWEKjhLtp0H3j" class="social-card" target="_blank">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieTLS3wYoRyqqXdPi-KZgxmp9-QLcpl-KQJjJ4bHS216n2MZoWzfuelWx51JlWvWqYUV92us1skBPuOwsvV9FeDNNP650_x26mNRqN2F3cRddhpGYFXOxMakEJVCIvZTNgihzuwNhg4_Nja62kEoWW0hlkwBfSHn9OEfJ-szYAgW4s7y_VMjFo1pj2OjQ/s320/Proyek%20Baru%208%20%5B8A7CA6B%5D.png" alt="WhatsApp" class="social-icon">
+                    <span>Channel</span>
+                </a>
+                <a href="https://dazon.web.app/store.html" class="social-card" target="_blank">
+                    <div class="social-emoji-icon">🛍️</div>
+                    <span>Store Datzon</span>
+                </a>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; <span id="year"></span> DATZON CHANNEL - Thank you for your support</p>
+        </footer>
+    </div>
+
+    <script>
+        const ACCESS_PASSWORD = "DATZON969";
+        const SESSION_DURATION = 300000; 
+        const STORAGE_KEY = "dtz_auth_session";
+
+        function initAuth() {
+            const session = localStorage.getItem(STORAGE_KEY);
+            if (session) {
+                const sessionData = JSON.parse(session);
+                const now = Date.now();
+                if (now - sessionData.timestamp < SESSION_DURATION) {
+                    unlockPage();
+                    return;
+                } else {
+                    localStorage.removeItem(STORAGE_KEY);
+                }
+            }
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('pass-input');
+            const lockContainer = document.getElementById('lock-container');
+            const lockSvg = document.getElementById('lock-svg');
+
+            if (input.value.toUpperCase() === ACCESS_PASSWORD) {
+                saveSession();
+                animateUnlock();
+                setTimeout(unlockPage, 600);
+            } else {
+                lockContainer.classList.add('shaking');
+                input.style.borderColor = 'var(--error)';
+                setTimeout(() => {
+                    lockContainer.classList.remove('shaking');
+                    input.style.borderColor = 'var(--border)';
+                }, 400);
+                input.value = "";
+            }
+        }
+
+        function animateUnlock() {
+            const lockSvg = document.getElementById('lock-svg');
+            lockSvg.innerHTML = `
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V4a5 5 0 0 1 10 0v4"></path>
+            `;
+            lockSvg.style.fill = "var(--success)";
+        }
+
+        function unlockPage() {
+            document.body.classList.add('unlocked');
+        }
+
+        function saveSession() {
+            const sessionData = { authenticated: true, timestamp: Date.now() };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(sessionData));
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.removeAttribute('data-theme');
+                icon.innerText = "🌙";
+                text.innerText = "Dark Mode";
+            } else {
+                body.setAttribute('data-theme', 'light');
+                icon.innerText = "☀️";
+                text.innerText = "Light Mode";
+            }
+        }
+
+        // Mobile Keyboard Handling
+        const passInput = document.getElementById('pass-input');
+        passInput.addEventListener('focus', () => {
+            setTimeout(() => {
+                passInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+
+        passInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        document.getElementById('year').innerText = new Date().getFullYear();
+        window.onload = initAuth;
+    </script>
+</body>
+</html>
+
